@@ -1,0 +1,82 @@
+// Input/Output
+#include <iostream>
+#include <iomanip>
+#include <fstream>
+#include <sstream>
+
+// Containers
+#include <vector>
+#include <queue>
+#include <stack>
+#include <deque>
+#include <list>
+#include <set>
+#include <map>
+#include <unordered_set>
+#include <unordered_map>
+#include <bitset>
+
+// Algorithms & Utilities
+#include <algorithm>
+#include <numeric>
+#include <utility>
+#include <iterator>
+#include <functional>
+
+// Math & Strings
+#include <cmath>
+#include <string>
+#include <string_view>
+#include <complex>
+
+// C Compatibility Headers
+#include <cstdio>
+#include <cstdlib>
+#include <cstring>
+#include <ctime>
+#include <climits>
+#include <cfloat>
+#include <cassert>
+
+// #include <bits/stdc++.h>
+using namespace std;
+
+int f(int i, vector<int> &h, vector<int> &dp)
+{
+    if (i == 0)
+        return h[0];
+    if(i==1)
+        return max(h[0],h[1]);
+    if(i<0) return 0;
+
+    if (dp[i] != -1)
+        return dp[i];
+
+    int case1 = f(i-1,h,dp);
+
+    int case2 = h[i]+f(i-2,h,dp);
+
+    return dp[i] = max(case1, case2);
+}
+
+int houserob(vector<int> &h)
+{
+    int n = h.size();
+    vector<int> dp(n, -1);
+
+    return f(n - 1, h, dp);
+}
+
+int main()
+{
+    int n;
+    cin >> n;
+
+    vector<int> h(n);
+    for (int i = 0; i < n; i++)
+    {
+        cin >> h[i];
+    }
+
+    cout << houserob(h) << endl;
+}
